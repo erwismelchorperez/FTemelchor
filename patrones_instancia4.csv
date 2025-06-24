@@ -1,0 +1,2 @@
+condition,prediction,support,positive_count,positive_support,negative_count,negative_support
+A8 == f AND A9 == f AND A14 > 358.00 AND A5 != q,positive,74,74,0.13405797101449277,0,0.0

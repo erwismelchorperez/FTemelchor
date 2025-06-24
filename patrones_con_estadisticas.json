@@ -1,0 +1,218 @@
+[
+    {
+        "condition": "A8 == f AND A9 == f AND A14 <= 358.00 AND A5 == k AND A4 == g",
+        "prediction": "negative",
+        "support": 4,
+        "positive_count": 2,
+        "positive_support": 0.0036231884057971015,
+        "negative_count": 2,
+        "negative_support": 0.0036231884057971015
+    },
+    {
+        "condition": "A8 == f AND A9 == f AND A14 <= 358.00 AND A5 == k AND A4 != g",
+        "prediction": "negative",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0018115942028985507,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 == f AND A9 == f AND A14 <= 358.00 AND A5 != k AND A5 == ff",
+        "prediction": "negative",
+        "support": 4,
+        "positive_count": 2,
+        "positive_support": 0.0036231884057971015,
+        "negative_count": 2,
+        "negative_support": 0.0036231884057971015
+    },
+    {
+        "condition": "A8 == f AND A9 == f AND A14 <= 358.00 AND A5 != k AND A5 != ff",
+        "prediction": "positive",
+        "support": 82,
+        "positive_count": 72,
+        "positive_support": 0.13043478260869565,
+        "negative_count": 10,
+        "negative_support": 0.018115942028985508
+    },
+    {
+        "condition": "A8 == f AND A9 == f AND A14 > 358.00 AND A5 == q AND A11 == t",
+        "prediction": "positive",
+        "support": 11,
+        "positive_count": 11,
+        "positive_support": 0.019927536231884056,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 == f AND A9 == f AND A14 > 358.00 AND A5 == q AND A11 != t",
+        "prediction": "positive",
+        "support": 6,
+        "positive_count": 5,
+        "positive_support": 0.009057971014492754,
+        "negative_count": 1,
+        "negative_support": 0.0018115942028985507
+    },
+    {
+        "condition": "A8 == f AND A9 == f AND A14 > 358.00 AND A5 != q",
+        "prediction": "positive",
+        "support": 74,
+        "positive_count": 74,
+        "positive_support": 0.13405797101449277,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 == f AND A9 != f AND A13 <= 164.00 AND A4 == g AND A13 <= 60.00",
+        "prediction": "positive",
+        "support": 20,
+        "positive_count": 20,
+        "positive_support": 0.036231884057971016,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 == f AND A9 != f AND A13 <= 164.00 AND A4 == g AND A13 > 60.00",
+        "prediction": "positive",
+        "support": 19,
+        "positive_count": 13,
+        "positive_support": 0.02355072463768116,
+        "negative_count": 6,
+        "negative_support": 0.010869565217391304
+    },
+    {
+        "condition": "A8 == f AND A9 != f AND A13 <= 164.00 AND A4 != g AND A2 <= 24.33",
+        "prediction": "positive",
+        "support": 6,
+        "positive_count": 4,
+        "positive_support": 0.007246376811594203,
+        "negative_count": 2,
+        "negative_support": 0.0036231884057971015
+    },
+    {
+        "condition": "A8 == f AND A9 != f AND A13 <= 164.00 AND A4 != g AND A2 > 24.33",
+        "prediction": "negative",
+        "support": 5,
+        "positive_count": 4,
+        "positive_support": 0.007246376811594203,
+        "negative_count": 1,
+        "negative_support": 0.0018115942028985507
+    },
+    {
+        "condition": "A8 == f AND A9 != f AND A13 > 164.00 AND A5 == q",
+        "prediction": "positive",
+        "support": 4,
+        "positive_count": 4,
+        "positive_support": 0.007246376811594203,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 == f AND A9 != f AND A13 > 164.00 AND A5 != q AND A6 == h",
+        "prediction": "positive",
+        "support": 14,
+        "positive_count": 9,
+        "positive_support": 0.016304347826086956,
+        "negative_count": 5,
+        "negative_support": 0.009057971014492754
+    },
+    {
+        "condition": "A8 == f AND A9 != f AND A13 > 164.00 AND A5 != q AND A6 != h",
+        "prediction": "negative",
+        "support": 31,
+        "positive_count": 21,
+        "positive_support": 0.03804347826086957,
+        "negative_count": 10,
+        "negative_support": 0.018115942028985508
+    },
+    {
+        "condition": "A8 != f AND A12 <= 2.00 AND A4 == gg",
+        "prediction": "positive",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0018115942028985507,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 != f AND A12 <= 2.00 AND A4 != gg AND A5 == x AND A3 <= 4.33",
+        "prediction": "negative",
+        "support": 3,
+        "positive_count": 3,
+        "positive_support": 0.005434782608695652,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 != f AND A12 <= 2.00 AND A4 != gg AND A5 == x AND A3 > 4.33",
+        "prediction": "positive",
+        "support": 3,
+        "positive_count": 2,
+        "positive_support": 0.0036231884057971015,
+        "negative_count": 1,
+        "negative_support": 0.0018115942028985507
+    },
+    {
+        "condition": "A8 != f AND A12 <= 2.00 AND A4 != gg AND A5 != x AND A6 == o",
+        "prediction": "negative",
+        "support": 2,
+        "positive_count": 1,
+        "positive_support": 0.0018115942028985507,
+        "negative_count": 1,
+        "negative_support": 0.0018115942028985507
+    },
+    {
+        "condition": "A8 != f AND A12 <= 2.00 AND A4 != gg AND A5 != x AND A6 != o",
+        "prediction": "negative",
+        "support": 256,
+        "positive_count": 245,
+        "positive_support": 0.4438405797101449,
+        "negative_count": 11,
+        "negative_support": 0.019927536231884056
+    },
+    {
+        "condition": "A8 != f AND A12 > 2.00 AND A1 == a",
+        "prediction": "positive",
+        "support": 2,
+        "positive_count": 2,
+        "positive_support": 0.0036231884057971015,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 != f AND A12 > 2.00 AND A1 != a AND A2 <= 28.88 AND A2 <= 21.80",
+        "prediction": "negative",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0018115942028985507,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 != f AND A12 > 2.00 AND A1 != a AND A2 <= 28.88 AND A2 > 21.80",
+        "prediction": "positive",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0018115942028985507,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 != f AND A12 > 2.00 AND A1 != a AND A2 > 28.88 AND A2 <= 36.08",
+        "prediction": "negative",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0018115942028985507,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "A8 != f AND A12 > 2.00 AND A1 != a AND A2 > 28.88 AND A2 > 36.08",
+        "prediction": "positive",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0018115942028985507,
+        "negative_count": 0,
+        "negative_support": 0.0
+    }
+]

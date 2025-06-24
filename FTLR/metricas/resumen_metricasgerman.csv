@@ -1,0 +1,2 @@
+DataSet,Accuracy,Precision,Recall,F1-Score,MCC,ErrorTipoI,ErrorTipoII,MatrixConfusion
+german,0.69,0.7566,0.8214,0.7877,0.2197,0.6167,0.1786,"[[23, 37], [25, 115]]"

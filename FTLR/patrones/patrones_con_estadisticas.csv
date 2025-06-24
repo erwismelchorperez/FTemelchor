@@ -1,0 +1,29 @@
+condition,prediction,support,negative_count,negative_support,positive_count,positive_support
+aval == A101 AND estatus_cuenta == A14 AND empleo == A171 AND finalidad == A40 AND duracion <= 12.00,positive,2,0,0.0,2,0.0017857142857142857
+aval == A101 AND estatus_cuenta == A14 AND empleo == A171 AND finalidad == A40 AND duracion > 12.00,negative,1,0,0.0,1,0.0008928571428571428
+aval == A101 AND estatus_cuenta == A14 AND empleo == A171 AND finalidad != A40,negative,10,0,0.0,10,0.008928571428571428
+aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago == A141 AND finalidad == A43,positive,13,2,0.0017857142857142857,11,0.009821428571428571
+aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago == A141 AND finalidad != A43,negative,28,13,0.011607142857142858,15,0.013392857142857142
+aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago != A141 AND historial_creditos == A31,negative,6,2,0.0017857142857142857,4,0.0035714285714285713
+aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago != A141 AND historial_creditos != A31,positive,269,28,0.025,241,0.21517857142857144
+aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos == A34 AND finalidad == A46,negative,4,1,0.0008928571428571428,3,0.0026785714285714286
+aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos == A34 AND finalidad != A46,positive,72,14,0.0125,58,0.05178571428571429
+aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos != A34 AND historial_creditos == A32,positive,215,101,0.09017857142857143,114,0.10178571428571428
+aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos != A34 AND historial_creditos != A32,negative,62,17,0.015178571428571428,45,0.04017857142857143
+aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda == A152 AND finalidad == A49,positive,10,1,0.0008928571428571428,9,0.008035714285714285
+aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda == A152 AND finalidad != A49,negative,66,26,0.023214285714285715,40,0.03571428571428571
+aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda != A152 AND genero_estadocivil == A93,positive,16,7,0.00625,9,0.008035714285714285
+aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda != A152 AND genero_estadocivil != A93,negative,38,0,0.0,38,0.033928571428571426
+aval != A101 AND vivienda == A152 AND cuenta_ahorro == A61 AND planesdepago == A142,negative,5,0,0.0,5,0.004464285714285714
+aval != A101 AND vivienda == A152 AND cuenta_ahorro == A61 AND planesdepago != A142 AND finalidad == A43,positive,22,4,0.0035714285714285713,18,0.01607142857142857
+aval != A101 AND vivienda == A152 AND cuenta_ahorro == A61 AND planesdepago != A142 AND finalidad != A43,negative,33,16,0.014285714285714285,17,0.015178571428571428
+aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil == A93 AND duracion <= 16.50,positive,12,3,0.0026785714285714286,9,0.008035714285714285
+aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil == A93 AND duracion > 16.50,negative,12,1,0.0008928571428571428,11,0.009821428571428571
+aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil != A93 AND finalidad == A43,negative,2,1,0.0008928571428571428,1,0.0008928571428571428
+aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil != A93 AND finalidad != A43,negative,37,0,0.0,37,0.033035714285714286
+aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia <= 3.00 AND finalidad == A42,negative,18,2,0.0017857142857142857,16,0.014285714285714285
+aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia <= 3.00 AND finalidad != A42,negative,139,1,0.0008928571428571428,138,0.12321428571428572
+aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia > 3.00 AND cuenta_ahorro == A65,positive,2,0,0.0,2,0.0017857142857142857
+aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia > 3.00 AND cuenta_ahorro != A65,negative,22,4,0.0035714285714285713,18,0.01607142857142857
+aval != A101 AND vivienda != A152 AND dependientes > 1.00 AND historial_creditos == A34,negative,1,0,0.0,1,0.0008928571428571428
+aval != A101 AND vivienda != A152 AND dependientes > 1.00 AND historial_creditos != A34,positive,3,0,0.0,3,0.0026785714285714286

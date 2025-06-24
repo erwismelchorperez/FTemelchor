@@ -1,0 +1,2 @@
+DataSet,Accuracy,Precision,Recall,F1-Score,MCC,ErrorTipoI,ErrorTipoII,MatrixConfusion
+australian.csv,0.8188,0.7812,0.8197,0.8,0.6352,0.1818,0.1803,"[[63, 14], [11, 50]]"

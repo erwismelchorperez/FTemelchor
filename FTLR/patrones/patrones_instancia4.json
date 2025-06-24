@@ -1,0 +1,11 @@
+[
+    {
+        "condition": "aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia > 3.00 AND cuenta_ahorro != A65",
+        "prediction": "negative",
+        "support": 22,
+        "positive_count": 18,
+        "positive_support": 0.01607142857142857,
+        "negative_count": 4,
+        "negative_support": 0.0035714285714285713
+    }
+]

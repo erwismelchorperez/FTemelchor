@@ -1,0 +1,11 @@
+[
+    {
+        "condition": "A8 == f AND A9 == f AND A14 > 358.00 AND A5 != q",
+        "prediction": "positive",
+        "support": 74,
+        "positive_count": 74,
+        "positive_support": 0.13405797101449277,
+        "negative_count": 0,
+        "negative_support": 0.0
+    }
+]

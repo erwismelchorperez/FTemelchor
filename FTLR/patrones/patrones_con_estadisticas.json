@@ -1,0 +1,254 @@
+[
+    {
+        "condition": "aval == A101 AND estatus_cuenta == A14 AND empleo == A171 AND finalidad == A40 AND duracion <= 12.00",
+        "prediction": "positive",
+        "support": 2,
+        "positive_count": 2,
+        "positive_support": 0.0017857142857142857,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta == A14 AND empleo == A171 AND finalidad == A40 AND duracion > 12.00",
+        "prediction": "negative",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0008928571428571428,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta == A14 AND empleo == A171 AND finalidad != A40",
+        "prediction": "negative",
+        "support": 10,
+        "positive_count": 10,
+        "positive_support": 0.008928571428571428,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago == A141 AND finalidad == A43",
+        "prediction": "positive",
+        "support": 13,
+        "positive_count": 11,
+        "positive_support": 0.009821428571428571,
+        "negative_count": 2,
+        "negative_support": 0.0017857142857142857
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago == A141 AND finalidad != A43",
+        "prediction": "negative",
+        "support": 28,
+        "positive_count": 15,
+        "positive_support": 0.013392857142857142,
+        "negative_count": 13,
+        "negative_support": 0.011607142857142858
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago != A141 AND historial_creditos == A31",
+        "prediction": "negative",
+        "support": 6,
+        "positive_count": 4,
+        "positive_support": 0.0035714285714285713,
+        "negative_count": 2,
+        "negative_support": 0.0017857142857142857
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta == A14 AND empleo != A171 AND planesdepago != A141 AND historial_creditos != A31",
+        "prediction": "positive",
+        "support": 269,
+        "positive_count": 241,
+        "positive_support": 0.21517857142857144,
+        "negative_count": 28,
+        "negative_support": 0.025
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos == A34 AND finalidad == A46",
+        "prediction": "negative",
+        "support": 4,
+        "positive_count": 3,
+        "positive_support": 0.0026785714285714286,
+        "negative_count": 1,
+        "negative_support": 0.0008928571428571428
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos == A34 AND finalidad != A46",
+        "prediction": "positive",
+        "support": 72,
+        "positive_count": 58,
+        "positive_support": 0.05178571428571429,
+        "negative_count": 14,
+        "negative_support": 0.0125
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos != A34 AND historial_creditos == A32",
+        "prediction": "positive",
+        "support": 215,
+        "positive_count": 114,
+        "positive_support": 0.10178571428571428,
+        "negative_count": 101,
+        "negative_support": 0.09017857142857143
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago == A143 AND historial_creditos != A34 AND historial_creditos != A32",
+        "prediction": "negative",
+        "support": 62,
+        "positive_count": 45,
+        "positive_support": 0.04017857142857143,
+        "negative_count": 17,
+        "negative_support": 0.015178571428571428
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda == A152 AND finalidad == A49",
+        "prediction": "positive",
+        "support": 10,
+        "positive_count": 9,
+        "positive_support": 0.008035714285714285,
+        "negative_count": 1,
+        "negative_support": 0.0008928571428571428
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda == A152 AND finalidad != A49",
+        "prediction": "negative",
+        "support": 66,
+        "positive_count": 40,
+        "positive_support": 0.03571428571428571,
+        "negative_count": 26,
+        "negative_support": 0.023214285714285715
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda != A152 AND genero_estadocivil == A93",
+        "prediction": "positive",
+        "support": 16,
+        "positive_count": 9,
+        "positive_support": 0.008035714285714285,
+        "negative_count": 7,
+        "negative_support": 0.00625
+    },
+    {
+        "condition": "aval == A101 AND estatus_cuenta != A14 AND planesdepago != A143 AND vivienda != A152 AND genero_estadocivil != A93",
+        "prediction": "negative",
+        "support": 38,
+        "positive_count": 38,
+        "positive_support": 0.033928571428571426,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval != A101 AND vivienda == A152 AND cuenta_ahorro == A61 AND planesdepago == A142",
+        "prediction": "negative",
+        "support": 5,
+        "positive_count": 5,
+        "positive_support": 0.004464285714285714,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval != A101 AND vivienda == A152 AND cuenta_ahorro == A61 AND planesdepago != A142 AND finalidad == A43",
+        "prediction": "positive",
+        "support": 22,
+        "positive_count": 18,
+        "positive_support": 0.01607142857142857,
+        "negative_count": 4,
+        "negative_support": 0.0035714285714285713
+    },
+    {
+        "condition": "aval != A101 AND vivienda == A152 AND cuenta_ahorro == A61 AND planesdepago != A142 AND finalidad != A43",
+        "prediction": "negative",
+        "support": 33,
+        "positive_count": 17,
+        "positive_support": 0.015178571428571428,
+        "negative_count": 16,
+        "negative_support": 0.014285714285714285
+    },
+    {
+        "condition": "aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil == A93 AND duracion <= 16.50",
+        "prediction": "positive",
+        "support": 12,
+        "positive_count": 9,
+        "positive_support": 0.008035714285714285,
+        "negative_count": 3,
+        "negative_support": 0.0026785714285714286
+    },
+    {
+        "condition": "aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil == A93 AND duracion > 16.50",
+        "prediction": "negative",
+        "support": 12,
+        "positive_count": 11,
+        "positive_support": 0.009821428571428571,
+        "negative_count": 1,
+        "negative_support": 0.0008928571428571428
+    },
+    {
+        "condition": "aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil != A93 AND finalidad == A43",
+        "prediction": "negative",
+        "support": 2,
+        "positive_count": 1,
+        "positive_support": 0.0008928571428571428,
+        "negative_count": 1,
+        "negative_support": 0.0008928571428571428
+    },
+    {
+        "condition": "aval != A101 AND vivienda == A152 AND cuenta_ahorro != A61 AND genero_estadocivil != A93 AND finalidad != A43",
+        "prediction": "negative",
+        "support": 37,
+        "positive_count": 37,
+        "positive_support": 0.033035714285714286,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia <= 3.00 AND finalidad == A42",
+        "prediction": "negative",
+        "support": 18,
+        "positive_count": 16,
+        "positive_support": 0.014285714285714285,
+        "negative_count": 2,
+        "negative_support": 0.0017857142857142857
+    },
+    {
+        "condition": "aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia <= 3.00 AND finalidad != A42",
+        "prediction": "negative",
+        "support": 139,
+        "positive_count": 138,
+        "positive_support": 0.12321428571428572,
+        "negative_count": 1,
+        "negative_support": 0.0008928571428571428
+    },
+    {
+        "condition": "aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia > 3.00 AND cuenta_ahorro == A65",
+        "prediction": "positive",
+        "support": 2,
+        "positive_count": 2,
+        "positive_support": 0.0017857142857142857,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia > 3.00 AND cuenta_ahorro != A65",
+        "prediction": "negative",
+        "support": 22,
+        "positive_count": 18,
+        "positive_support": 0.01607142857142857,
+        "negative_count": 4,
+        "negative_support": 0.0035714285714285713
+    },
+    {
+        "condition": "aval != A101 AND vivienda != A152 AND dependientes > 1.00 AND historial_creditos == A34",
+        "prediction": "negative",
+        "support": 1,
+        "positive_count": 1,
+        "positive_support": 0.0008928571428571428,
+        "negative_count": 0,
+        "negative_support": 0.0
+    },
+    {
+        "condition": "aval != A101 AND vivienda != A152 AND dependientes > 1.00 AND historial_creditos != A34",
+        "prediction": "positive",
+        "support": 3,
+        "positive_count": 3,
+        "positive_support": 0.0026785714285714286,
+        "negative_count": 0,
+        "negative_support": 0.0
+    }
+]
