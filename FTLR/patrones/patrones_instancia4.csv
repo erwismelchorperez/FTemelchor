@@ -1,2 +1,2 @@
 condition,prediction,support,positive_count,positive_support,negative_count,negative_support
-aval != A101 AND vivienda != A152 AND dependientes <= 1.00 AND residencia > 3.00 AND cuenta_ahorro != A65,negative,22,18,0.01607142857142857,4,0.0035714285714285713
+expenditure > 0.00,positive,798,798,0.4877750611246944,0,0.0
