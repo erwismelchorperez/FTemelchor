@@ -1,9 +1,9 @@
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
+from collections import Counter
 import numpy as np
 import pandas as pd
-from collections import Counter
 import os
 import sys
 sys.path.append(os.path.abspath("./"))

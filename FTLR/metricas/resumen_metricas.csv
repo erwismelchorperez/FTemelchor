@@ -1,0 +1,6 @@
+DataSet,split,hybrid,Accuracy,Precision,Recall,F1-Score,AUC,MCC,ErrorTipoI,ErrorTipoII,MatrixConfusion
+aer.csv,gini,False,0.9962,1.0,0.9951,0.9976,0.9976,0.9892,0.0,0.0049,"[[59, 0], [1, 204]]"
+aer.csv,gini,True,0.9962,1.0,0.9951,0.9976,0.9976,0.9892,0.0,0.0049,"[[59, 0], [1, 204]]"
+aer.csv,twoing,False,0.9962,1.0,0.9951,0.9976,0.9976,0.9892,0.0,0.0049,"[[59, 0], [1, 204]]"
+aer.csv,entropy,False,0.9962,1.0,0.9951,0.9976,0.9976,0.9892,0.0,0.0049,"[[59, 0], [1, 204]]"
+aer.csv,entropy,True,0.9962,1.0,0.9951,0.9976,0.9976,0.9892,0.0,0.0049,"[[59, 0], [1, 204]]"

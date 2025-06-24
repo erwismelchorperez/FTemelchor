@@ -9,7 +9,7 @@ class ProccessData:
         self.y = pd.Series()
         self.categorical_features = []
     def ReadDataset(self):
-        self.dataset = pd.read_csv("./../../datasets/" + self.namedataset + ".csv")
+        self.dataset = pd.read_csv("./../../datasets/" + self.namedataset)
         self.PreProccessDataset()
     def PreProccessDataset(self):
         self.dataset = self.dataset.dropna(axis=0)

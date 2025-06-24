@@ -1,2 +1,0 @@
-DataSet,Accuracy,Precision,Recall,F1-Score,MCC,ErrorTipoI,ErrorTipoII,MatrixConfusion
-german.csv,0.69,0.8047,0.7357,0.7687,0.3046,0.4167,0.2643,"[[35, 25], [37, 103]]"
