@@ -1,3 +1,0 @@
-Regla 1 para instancia 4:
-IF A8 == f AND A9 == f AND A14 > 358.00 AND A5 != q THEN prediction = positive (support=74)
-

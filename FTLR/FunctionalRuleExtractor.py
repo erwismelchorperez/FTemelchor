@@ -145,7 +145,7 @@ class FunctionalRuleExtractor:
 
         instance = X_test.iloc[instance_idx]
         covering_rules = []
-        print("Instancia a predecir:        " , instance)
+        #print("Instancia a predecir:        " , instance)
         for rule in rules:
             """
             print(" Regla:   ", rule['condition'])
