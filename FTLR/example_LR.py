@@ -116,7 +116,6 @@ if __name__ == "__main__":
                 }
 
                 rows.append(row)
-        break
     # Exportar a CSV
     df = pd.DataFrame(rows)
     df.to_csv("./metricas/resumen_metricas.csv", index=False)
