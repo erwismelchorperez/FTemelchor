@@ -1,92 +1,290 @@
 [
     {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active <= 0.00 AND age <= 28.90 AND owner == yes",
-        "prediction": "negative",
-        "support": 2,
-        "positive_count": 1,
-        "positive_support": 0.0006112469437652812,
-        "negative_count": 1,
-        "negative_support": 0.0006112469437652812
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active <= 0.00 AND age <= 28.90 AND owner != yes",
-        "prediction": "negative",
-        "support": 121,
-        "positive_count": 118,
-        "positive_support": 0.07212713936430318,
-        "negative_count": 2,
-        "negative_support": 0.0012224938875305623
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active <= 0.00 AND age > 28.90 AND age <= 35.70",
-        "prediction": "negative",
-        "support": 61,
-        "positive_count": 61,
-        "positive_support": 0.03728606356968215,
-        "negative_count": 1,
-        "negative_support": 0.0006112469437652812
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active <= 0.00 AND age > 28.90 AND age > 35.70",
-        "prediction": "negative",
-        "support": 61,
-        "positive_count": 61,
-        "positive_support": 0.03728606356968215,
-        "negative_count": 0,
-        "negative_support": 0.0
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active > 0.00 AND active <= 3.00 AND majorcards <= 0.00",
-        "prediction": "negative",
-        "support": 67,
-        "positive_count": 67,
-        "positive_support": 0.04095354523227384,
-        "negative_count": 0,
-        "negative_support": 0.0
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active > 0.00 AND active <= 3.00 AND majorcards > 0.00",
-        "prediction": "negative",
-        "support": 52,
-        "positive_count": 49,
-        "positive_support": 0.029951100244498777,
-        "negative_count": 3,
-        "negative_support": 0.0018337408312958435
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active > 0.00 AND active > 3.00 AND selfemp == no",
-        "prediction": "negative",
-        "support": 108,
-        "positive_count": 97,
-        "positive_support": 0.059290953545232276,
-        "negative_count": 11,
-        "negative_support": 0.006723716381418093
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports <= 0.00 AND active > 0.00 AND active > 3.00 AND selfemp != no",
-        "prediction": "negative",
-        "support": 4,
-        "positive_count": 2,
-        "positive_support": 0.0012224938875305623,
-        "negative_count": 2,
-        "negative_support": 0.0012224938875305623
-    },
-    {
-        "condition": "expenditure <= 0.00 AND reports > 0.00",
-        "prediction": "negative",
-        "support": 362,
-        "positive_count": 362,
-        "positive_support": 0.22127139364303178,
-        "negative_count": 0,
-        "negative_support": 0.0
-    },
-    {
-        "condition": "expenditure > 0.00",
+        "condition": "sex == B AND education == C AND prior_repay <= 13.56 AND account_balance <= 19.68 AND account_balance <= 18.28",
         "prediction": "positive",
-        "support": 798,
-        "positive_count": 798,
-        "positive_support": 0.4877750611246944,
+        "support": 150,
+        "positive_count": 122,
+        "positive_support": 0.0015750064549444876,
+        "negative_count": 28,
+        "negative_support": 0.00036147689129873486
+    },
+    {
+        "condition": "sex == B AND education == C AND prior_repay <= 13.56 AND account_balance <= 19.68 AND account_balance > 18.28",
+        "prediction": "positive",
+        "support": 150,
+        "positive_count": 137,
+        "positive_support": 0.0017686547895688098,
+        "negative_count": 14,
+        "negative_support": 0.00018073844564936743
+    },
+    {
+        "condition": "sex == B AND education == C AND prior_repay <= 13.56 AND account_balance > 19.68 AND household == D",
+        "prediction": "positive",
+        "support": 53,
+        "positive_count": 44,
+        "positive_support": 0.0005680351148980118,
+        "negative_count": 9,
+        "negative_support": 0.00011618900077459334
+    },
+    {
+        "condition": "sex == B AND education == C AND prior_repay <= 13.56 AND account_balance > 19.68 AND household != D",
+        "prediction": "positive",
+        "support": 246,
+        "positive_count": 230,
+        "positive_support": 0.0029692744642396077,
+        "negative_count": 15,
+        "negative_support": 0.00019364833462432224
+    },
+    {
+        "condition": "sex == B AND education == C AND prior_repay > 13.56 AND avaliable_balance <= 0.00 AND marriage == B",
+        "prediction": "positive",
+        "support": 62,
+        "positive_count": 54,
+        "positive_support": 0.0006971340046475601,
+        "negative_count": 8,
+        "negative_support": 0.00010327911179963853
+    },
+    {
+        "condition": "sex == B AND education == C AND prior_repay > 13.56 AND avaliable_balance <= 0.00 AND marriage != B",
+        "prediction": "positive",
+        "support": 426,
+        "positive_count": 404,
+        "positive_support": 0.005215595145881745,
+        "negative_count": 22,
+        "negative_support": 0.0002840175574490059
+    },
+    {
+        "condition": "sex == B AND education == C AND prior_repay > 13.56 AND avaliable_balance > 0.00 AND marriage == A",
+        "prediction": "positive",
+        "support": 37,
+        "positive_count": 36,
+        "positive_support": 0.00046475600309837337,
+        "negative_count": 1,
+        "negative_support": 1.2909888974954816e-05
+    },
+    {
+        "condition": "sex == B AND education == C AND prior_repay > 13.56 AND avaliable_balance > 0.00 AND marriage != A",
+        "prediction": "positive",
+        "support": 74,
+        "positive_count": 74,
+        "positive_support": 0.0009553317841466564,
         "negative_count": 0,
         "negative_support": 0.0
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation == A AND circulated_interest <= 0.00 AND yu_e_tm_categery == C",
+        "prediction": "positive",
+        "support": 248,
+        "positive_count": 166,
+        "positive_support": 0.002143041569842499,
+        "negative_count": 82,
+        "negative_support": 0.0010586108959462948
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation == A AND circulated_interest <= 0.00 AND yu_e_tm_categery != C",
+        "prediction": "positive",
+        "support": 2907,
+        "positive_count": 2343,
+        "positive_support": 0.030247869868319132,
+        "negative_count": 564,
+        "negative_support": 0.007281177381874516
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation == A AND circulated_interest > 0.00 AND circulated_interest <= 3.18",
+        "prediction": "positive",
+        "support": 1204,
+        "positive_count": 803,
+        "positive_support": 0.010366640846888717,
+        "negative_count": 399,
+        "negative_support": 0.005151045701006971
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation == A AND circulated_interest > 0.00 AND circulated_interest > 3.18",
+        "prediction": "positive",
+        "support": 1203,
+        "positive_count": 960,
+        "positive_support": 0.012393493415956624,
+        "negative_count": 245,
+        "negative_support": 0.0031629227988639297
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation != A AND yu_e_tm_categery == A AND time <= 1974592469.00",
+        "prediction": "positive",
+        "support": 59,
+        "positive_count": 54,
+        "positive_support": 0.0006971340046475601,
+        "negative_count": 5,
+        "negative_support": 6.454944487477407e-05
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation != A AND yu_e_tm_categery == A AND time > 1974592469.00",
+        "prediction": "positive",
+        "support": 58,
+        "positive_count": 35,
+        "positive_support": 0.00045184611412341856,
+        "negative_count": 23,
+        "negative_support": 0.00029692744642396073
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation != A AND yu_e_tm_categery != A AND prior_account <= 14.65",
+        "prediction": "positive",
+        "support": 908,
+        "positive_count": 782,
+        "positive_support": 0.010095533178414665,
+        "negative_count": 127,
+        "negative_support": 0.0016395558998192616
+    },
+    {
+        "condition": "sex == B AND education != C AND occupation != A AND yu_e_tm_categery != A AND prior_account > 14.65",
+        "prediction": "positive",
+        "support": 907,
+        "positive_count": 817,
+        "positive_support": 0.010547379292538085,
+        "negative_count": 89,
+        "negative_support": 0.0011489801187709785
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education == C AND household == A AND yu_e_tm_categery == A",
+        "prediction": "positive",
+        "support": 143,
+        "positive_count": 85,
+        "positive_support": 0.0010973405628711592,
+        "negative_count": 58,
+        "negative_support": 0.0007487735605473793
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education == C AND household == A AND yu_e_tm_categery != A",
+        "prediction": "positive",
+        "support": 992,
+        "positive_count": 802,
+        "positive_support": 0.010353730957913762,
+        "negative_count": 190,
+        "negative_support": 0.0024528789052414147
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education == C AND household != A AND household == B",
+        "prediction": "positive",
+        "support": 2544,
+        "positive_count": 1800,
+        "positive_support": 0.023237800154918668,
+        "negative_count": 744,
+        "negative_support": 0.009604957397366382
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education == C AND household != A AND household != B",
+        "prediction": "positive",
+        "support": 2393,
+        "positive_count": 1342,
+        "positive_support": 0.01732507100438936,
+        "negative_count": 1051,
+        "negative_support": 0.013568293312677511
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education != C AND circulated_interest <= 0.00 AND prior_repay <= 12.08",
+        "prediction": "negative",
+        "support": 14422,
+        "positive_count": 8896,
+        "positive_support": 0.11484637232119804,
+        "negative_count": 5519,
+        "negative_support": 0.07124967725277563
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education != C AND circulated_interest <= 0.00 AND prior_repay > 12.08",
+        "prediction": "positive",
+        "support": 14422,
+        "positive_count": 7441,
+        "positive_support": 0.09606248386263878,
+        "negative_count": 6988,
+        "negative_support": 0.09021430415698425
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education != C AND circulated_interest > 0.00 AND circulated_interest <= 2.50",
+        "prediction": "negative",
+        "support": 10935,
+        "positive_count": 8320,
+        "positive_support": 0.10741027627162407,
+        "negative_count": 2622,
+        "negative_support": 0.033849728892331524
+    },
+    {
+        "condition": "sex != B AND occupation == A AND education != C AND circulated_interest > 0.00 AND circulated_interest > 2.50",
+        "prediction": "negative",
+        "support": 10934,
+        "positive_count": 6934,
+        "positive_support": 0.08951717015233669,
+        "negative_count": 3993,
+        "negative_support": 0.051549186676994575
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 <= 5904825108.91 AND prior_repay <= 13.44 AND account_balance <= 17.63",
+        "prediction": "negative",
+        "support": 1498,
+        "positive_count": 826,
+        "positive_support": 0.010663568293312678,
+        "negative_count": 673,
+        "negative_support": 0.008688355280144592
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 <= 5904825108.91 AND prior_repay <= 13.44 AND account_balance > 17.63",
+        "prediction": "positive",
+        "support": 1498,
+        "positive_count": 907,
+        "positive_support": 0.011709269300284018,
+        "negative_count": 588,
+        "negative_support": 0.007591014717273432
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 <= 5904825108.91 AND prior_repay > 13.44 AND prior_repay <= 16.89",
+        "prediction": "positive",
+        "support": 1498,
+        "positive_count": 896,
+        "positive_support": 0.011567260521559515,
+        "negative_count": 606,
+        "negative_support": 0.007823392718822618
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 <= 5904825108.91 AND prior_repay > 13.44 AND prior_repay > 16.89",
+        "prediction": "positive",
+        "support": 1498,
+        "positive_count": 1096,
+        "positive_support": 0.014149238316550478,
+        "negative_count": 400,
+        "negative_support": 0.005163955589981926
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 > 5904825108.91 AND prior_repay <= 14.56 AND consume_count <= 0.00",
+        "prediction": "positive",
+        "support": 1543,
+        "positive_count": 1192,
+        "positive_support": 0.01538858765814614,
+        "negative_count": 351,
+        "negative_support": 0.00453137103020914
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 > 5904825108.91 AND prior_repay <= 14.56 AND consume_count > 0.00",
+        "prediction": "positive",
+        "support": 1453,
+        "positive_count": 945,
+        "positive_support": 0.012199845081332301,
+        "negative_count": 506,
+        "negative_support": 0.0065324038213271365
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 > 5904825108.91 AND prior_repay > 14.56 AND prior_repay <= 18.15",
+        "prediction": "positive",
+        "support": 1498,
+        "positive_count": 1120,
+        "positive_support": 0.014459075651949394,
+        "negative_count": 378,
+        "negative_support": 0.00487993803253292
+    },
+    {
+        "condition": "sex != B AND occupation != A AND tm_encode_3 > 5904825108.91 AND prior_repay > 14.56 AND prior_repay > 18.15",
+        "prediction": "positive",
+        "support": 1497,
+        "positive_count": 1236,
+        "positive_support": 0.015956622773044153,
+        "negative_count": 263,
+        "negative_support": 0.0033953008004131164
     }
 ]
