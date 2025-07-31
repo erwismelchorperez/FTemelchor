@@ -1,2 +1,2 @@
 condition,prediction,support,positive_count,positive_support,negative_count,negative_support
-expenditure > 0.00,positive,798,798,0.4877750611246944,0,0.0
+sex == B AND education != C AND occupation != A AND yu_e_tm_categery != A AND prior_account > 14.65,positive,907,817,0.010547379292538085,89,0.0011489801187709785
