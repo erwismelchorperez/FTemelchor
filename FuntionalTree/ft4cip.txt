@@ -1,0 +1,561 @@
+# ft4cip.py
+import numpy as np
+import pandas as pd
+from copy import deepcopy
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.model_selection import train_test_split, StratifiedKFold
+from sklearn.metrics import roc_auc_score, accuracy_score
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+
+# -------------------------
+# LogisticModel: wrapper para modelos en hojas
+# -------------------------
+class LogisticModel:
+    def __init__(self, use_boosting=False, boosting_params=None, random_state=None):
+        """
+        use_boosting: si True usa GradientBoostingClassifier (aprox LogitBoost).
+        boosting_params: dict de parámetros para GradientBoostingClassifier.
+        """
+        self.use_boosting = use_boosting
+        self.random_state = random_state
+        if boosting_params is None:
+            boosting_params = {"n_estimators": 100, "learning_rate": 0.1, "max_depth": 3}
+        self.boosting_params = boosting_params
+
+        self.model = None
+        self.classes_ = None
+
+    def fit(self, X, y):
+        if self.use_boosting:
+            clf = GradientBoostingClassifier(**self.boosting_params)
+            clf.fit(X, y)
+            self.model = clf
+            self.classes_ = clf.classes_
+        else:
+            clf = LogisticRegression(max_iter=200, solver='lbfgs', multi_class='multinomial')
+            clf.fit(X, y)
+            self.model = clf
+            self.classes_ = clf.classes_
+
+    def predict_proba(self, X):
+        if self.model is None:
+            raise RuntimeError("Model not trained")
+        return self.model.predict_proba(X)
+
+    def predict(self, X):
+        if self.model is None:
+            raise RuntimeError("Model not trained")
+        return self.model.predict(X)
+
+    def score_auc(self, X, y):
+        probs = self.predict_proba(X)
+        # multiclass AUC averaged via one-vs-rest (if binary it's just AUC)
+        if probs.shape[1] == 2:
+            return roc_auc_score(y, probs[:,1])
+        else:
+            # one-vs-rest average
+            from sklearn.preprocessing import label_binarize
+            y_bin = label_binarize(y, classes=self.classes_)
+            return roc_auc_score(y_bin, probs, average="macro")
+
+
+# -------------------------
+# Twoing evaluation
+# -------------------------
+def twoing_score(y_left, y_right):
+    """
+    Twoing metric for binary split.
+    y_left, y_right: numpy arrays of class labels
+    returns: twoing score (higher = better)
+    """
+    total = len(y_left) + len(y_right)
+    if total == 0:
+        return 0.0
+    # compute class proportions
+    classes = np.unique(np.concatenate([y_left, y_right]))
+    p_left = np.array([np.mean(y_left == c) if len(y_left)>0 else 0.0 for c in classes])
+    p_right = np.array([np.mean(y_right == c) if len(y_right)>0 else 0.0 for c in classes])
+    diff = np.abs(p_left - p_right).sum()
+    score = (len(y_left)/total) * (len(y_right)/total) * (diff**2)
+    return score
+
+
+# -------------------------
+# Split generation utilities
+# -------------------------
+def candidate_splits_univariate(X, feature_index, feature_values=None, n_thresholds=5):
+    """
+    Generate univariate candidate splits for a numeric feature.
+    Returns list of thresholds (value, is_left_less_equal boolean True means left = <= value).
+    For categorical features (feature_values not None), returns splits by category subsets (simplified).
+    """
+    col = X[:, feature_index]
+    if feature_values is None:  # numeric
+        # use percentiles as candidate thresholds
+        unique_vals = np.unique(col[~np.isnan(col)])
+        if unique_vals.size == 0:
+            return []
+        if unique_vals.size <= n_thresholds:
+            thresholds = unique_vals[:-1]  # avoid last
+        else:
+            percentiles = np.linspace(5, 95, n_thresholds)
+            thresholds = np.percentile(unique_vals, percentiles)
+        thresholds = np.unique(thresholds)
+        return [("num", float(t)) for t in thresholds]
+    else:
+        # categorical: try splitting by each category (one-vs-rest)
+        cats = feature_values
+        return [("cat", c) for c in cats]
+
+
+def apply_univariate_split(X, feature_index, split):
+    """
+    Apply a univariate split.
+    split: ("num", threshold) -> left = <= threshold
+           ("cat", category) -> left = values == category
+    returns: mask_left (bool array)
+    """
+    typ, val = split
+    col = X[:, feature_index]
+    if typ == "num":
+        mask_left = np.where(np.isnan(col), False, col <= val)
+    else:
+        mask_left = (col == val)
+    return mask_left
+
+
+# -------------------------
+# MFLD (approximated via LDA)
+# -------------------------
+def mfl_d_split(X, y, feature_indices):
+    """
+    Multi-class Fisher Linear Discriminant using selected features.
+    Project X[:, feature_indices] using LDA to 1D, then find best threshold maximizing twoing.
+    Returns: (coef, threshold, projection_values) where coef is the lda coef used, threshold float.
+    """
+    if len(feature_indices) == 0:
+        return None
+    try:
+        # LDA with one component
+        lda = LinearDiscriminantAnalysis(n_components=1)
+        X_sub = X[:, feature_indices]
+        # If dimensionality problems arise, catch and return None
+        proj = lda.fit_transform(np.nan_to_num(X_sub), y).ravel()
+    except Exception:
+        return None
+
+    # try candidate thresholds: percentiles
+    percentiles = np.linspace(5, 95, 25)
+    best = None
+    best_score = -np.inf
+    for p in percentiles:
+        th = np.percentile(proj, p)
+        left_idx = proj <= th
+        y_left = y[left_idx]
+        y_right = y[~left_idx]
+        if y_left.size == 0 or y_right.size == 0:
+            continue
+        s = twoing_score(y_left, y_right)
+        if s > best_score:
+            best_score = s
+            best = (th, s)
+    if best is None:
+        return None
+    threshold, score = best
+    return {"feature_indices": list(feature_indices), "threshold": float(threshold), "score": float(score), "lda": lda}
+
+
+# -------------------------
+# Sequential Forward Selection (SFS) for multivariate split
+# -------------------------
+def sequential_forward_selection(X, y, F_indices, evaluate_split_fn, split_generator_fn, max_features=None):
+    """
+    F_indices: list of feature indices (all candidates)
+    evaluate_split_fn: function that given a split descriptor returns a score (higher better)
+    split_generator_fn: function that given selected feature set returns a split (MFLD)
+    Returns: best_split descriptor from split_generator_fn over selected features.
+    """
+    if max_features is None:
+        max_features = len(F_indices)
+    candidate = set(F_indices)
+    selected = []
+    # first pass: evaluate each feature individually
+    best_eval = -np.inf
+    best_feature = None
+    best_split = None
+    for f in list(candidate):
+        split = split_generator_fn(X, y, [f])
+        if split is None:
+            continue
+        val = evaluate_split_fn(X, y, split)
+        if val > best_eval:
+            best_eval = val
+            best_feature = f
+            best_split = split
+    if best_feature is None:
+        return None
+    selected.append(best_feature)
+    candidate.remove(best_feature)
+
+    # iterative addition
+    while candidate and len(selected) < max_features:
+        best_candidate_eval = -np.inf
+        best_candidate_feature = None
+        best_candidate_split = None
+        for f in list(candidate):
+            features_try = selected + [f]
+            split = split_generator_fn(X, y, features_try)
+            if split is None:
+                continue
+            val = evaluate_split_fn(X, y, split)
+            if val > best_candidate_eval:
+                best_candidate_eval = val
+                best_candidate_feature = f
+                best_candidate_split = split
+        if best_candidate_eval > best_eval:
+            selected.append(best_candidate_feature)
+            candidate.remove(best_candidate_feature)
+            best_eval = best_candidate_eval
+            best_split = best_candidate_split
+        else:
+            break
+    return best_split
+
+
+# -------------------------
+# Node class
+# -------------------------
+class Node:
+    def __init__(self, depth=0):
+        self.depth = depth
+        self.is_leaf = True
+        self.model = None  # LogisticModel instance
+        self.split = None  # dict describing split {type:'univariate'/'mfl', ...}
+        self.left = None
+        self.right = None
+        self.samples_idx = None  # indices of training samples at node
+        self.prediction_cache = None
+
+    def predict_proba_instance(self, x, feature_names=None):
+        # given raw features array x (1d), route through tree and return probabilities
+        if self.is_leaf:
+            if self.model is None:
+                raise RuntimeError("Leaf model missing")
+            return self.model.predict_proba(x.reshape(1, -1))[0]
+        else:
+            # evaluate split
+            s = self.split
+            if s["type"] == "univariate":
+                feat = s["feature_index"]
+                typ = s["split"][0]
+                val = s["split"][1]
+                if typ == "num":
+                    go_left = (x[feat] <= val) if not np.isnan(x[feat]) else False
+                else:
+                    go_left = (x[feat] == val)
+            else:  # mfl
+                # projection with lda
+                fi = s["mfl"]["feature_indices"]
+                lda = s["mfl"]["lda"]
+                proj = lda.transform(x[fi].reshape(1, -1))[0,0]
+                go_left = (proj <= s["mfl"]["threshold"])
+            if go_left:
+                return self.left.predict_proba_instance(x)
+            else:
+                return self.right.predict_proba_instance(x)
+
+
+# -------------------------
+# FT4cip class
+# -------------------------
+class FT4cip:
+    def __init__(self,
+                 max_depth=10,
+                 min_samples_split=10,
+                 convert_nominal=True,
+                 use_boosting=False,
+                 boosting_params=None,
+                 sfs_max_features=4,
+                 random_state=None):
+        self.max_depth = max_depth
+        self.min_samples_split = min_samples_split
+        self.convert_nominal = convert_nominal
+        self.random_state = random_state
+        self.root = None
+        self.feature_names = None
+        self.categorical_mask = None
+        self.preprocessor = None
+        self.use_boosting = use_boosting
+        self.boosting_params = boosting_params
+        self.sfs_max_features = sfs_max_features
+
+    # ---------- preprocessing ----------
+    def _fit_preprocessor(self, X_df):
+        # Identify categorical columns
+        cat_cols = X_df.select_dtypes(include=['object', 'category']).columns.tolist()
+        num_cols = [c for c in X_df.columns if c not in cat_cols]
+        self.feature_names = list(X_df.columns)
+        self.categorical_mask = [c in cat_cols for c in self.feature_names]
+
+        if self.convert_nominal and len(cat_cols) > 0:
+            # use OneHotEncoder for categorical columns
+            ct = ColumnTransformer([
+                ("cat", OneHotEncoder(handle_unknown='ignore', sparse=False), cat_cols)
+            ], remainder='passthrough')
+            ct.fit(X_df)
+            self.preprocessor = ct
+        else:
+            # no encoding; but still fill missing numeric via imputer later
+            self.preprocessor = None
+
+    def _transform(self, X_df):
+        # returns numpy array (n_samples, n_features_transformed)
+        if self.preprocessor is not None:
+            arr = self.preprocessor.transform(X_df)
+            # feature names become generated; we will not try to maintain mapping here.
+            return arr
+        else:
+            # simple numeric? convert to numpy and keep object columns as-is
+            return X_df.values.astype(object)
+
+    def fit(self, X_df, y, validation_fraction=0.15):
+        """
+        X_df: pandas DataFrame (raw, may contain categorical)
+        y: array-like labels
+        """
+        # Fit preprocessors
+        self._fit_preprocessor(X_df)
+        X_all = self._transform(X_df)
+        y = np.array(y)
+
+        # store mapping to reconstruct instance vectors at prediction time:
+        # if we used onehot encoder, the transformed dims differ; we'll use transformed arrays in training & prediction.
+        self.root = Node(depth=0)
+        self.root.samples_idx = np.arange(len(y))
+
+        # build tree recursively; split data indices referencing X_all rows
+        idx_all = np.arange(len(y))
+        # use a held-out validation set for later pruning
+        if validation_fraction is not None and validation_fraction > 0:
+            train_idx, val_idx = train_test_split(idx_all, test_size=validation_fraction, stratify=y, random_state=self.random_state)
+            self._build_tree(self.root, X_all, y, train_idx)
+            # store validation set for pruning
+            self._val_X = X_all[val_idx]
+            self._val_y = y[val_idx]
+        else:
+            self._build_tree(self.root, X_all, y, idx_all)
+            self._val_X = None
+            self._val_y = None
+
+    # ---------- core tree builder ----------
+    def _build_tree(self, node, X, y, indices):
+        node.samples_idx = indices
+        # build or update logistic model
+        X_node = X[indices]
+        y_node = y[indices]
+
+        node.is_leaf = True
+        node.model = LogisticModel(use_boosting=self.use_boosting, boosting_params=self.boosting_params, random_state=self.random_state)
+        # fit model on numeric features → if using OneHotEncoder, X already transformed
+        node.model.fit(X_node, y_node)
+
+        # stop if pure or too small or depth reached
+        if len(np.unique(y_node)) == 1:
+            node.is_leaf = True
+            return
+        if len(indices) < self.min_samples_split or node.depth >= self.max_depth:
+            node.is_leaf = True
+            return
+
+        # Univariate splits
+        best_split = None
+        best_eval = -np.inf
+        # iterate over original feature positions (we will map into transformed dims approx: here treat X as numeric matrix)
+        n_features = X.shape[1]
+        for fi in range(n_features):
+            cand_splits = candidate_splits_univariate(X, fi, feature_values=None, n_thresholds=7)
+            for s in cand_splits:
+                mask_left = apply_univariate_split(X, fi, s)
+                # only consider split applied to subset indices
+                mask_left_idx = indices[mask_left[indices]]
+                mask_right_idx = indices[~mask_left[indices]]
+
+                if mask_left_idx.size == 0 or mask_right_idx.size == 0:
+                    continue
+                score = twoing_score(y[mask_left_idx], y[mask_right_idx])
+                if score > best_eval:
+                    best_eval = score
+                    best_split = {"type": "univariate", "feature_index": fi, "split": s, "score": score}
+
+        # If best feature numeric, do SFS to try multivariate MFLD
+        if best_split is not None:
+            # Use SFS over the (transformed) feature indices
+            mfl_split = sequential_forward_selection(X[indices], y[indices], list(range(X.shape[1])),
+                                                     evaluate_split_fn=lambda XX, yy, s: twoing_score(yy[XX <= s["threshold"]], yy[XX > s["threshold"]]) if s else -np.inf,
+                                                     split_generator_fn=lambda XX, yy, feats: mfl_d_split(XX, yy, feats),
+                                                     max_features=min(self.sfs_max_features, X.shape[1]))
+            # mfl_split is dict with threshold and feature_indices and score
+            if mfl_split is not None and mfl_split["score"] > best_eval:
+                # choose mfl_split
+                node.is_leaf = False
+                node.split = {"type": "mfl", "mfl": mfl_split}
+                # partition indices
+                lda = mfl_split["lda"]
+                proj = lda.transform(X[indices][:, mfl_split["feature_indices"]]).ravel()
+                mask_left_local = proj <= mfl_split["threshold"]
+                left_idx = indices[mask_left_local]
+                right_idx = indices[~mask_left_local]
+                node.left = Node(depth=node.depth + 1)
+                node.right = Node(depth=node.depth + 1)
+                self._build_tree(node.left, X, y, left_idx)
+                self._build_tree(node.right, X, y, right_idx)
+                return
+
+        # else if we have best univariate split, apply it and recurse
+        if best_split is not None:
+            node.is_leaf = False
+            node.split = best_split
+            # partition indices by evaluating split
+            mask_left = apply_univariate_split(X, best_split["feature_index"], best_split["split"])
+            left_idx = indices[mask_left[indices]]
+            right_idx = indices[~mask_left[indices]]
+            node.left = Node(depth=node.depth + 1)
+            node.right = Node(depth=node.depth + 1)
+            # build recursively
+            self._build_tree(node.left, X, y, left_idx)
+            self._build_tree(node.right, X, y, right_idx)
+            return
+        # If no split found, remain leaf
+        node.is_leaf = True
+        return
+
+    # ---------- prediction ----------
+    def predict_proba(self, X_df):
+        X = self._transform(X_df)
+        preds = np.array([self.root.predict_proba_instance(x) for x in X])
+        return preds
+
+    def predict(self, X_df):
+        probs = self.predict_proba(X_df)
+        if probs.shape[1] == 2:
+            return (probs[:,1] >= 0.5).astype(int)
+        else:
+            return probs.argmax(axis=1)
+
+    # ---------- pruning: Cost Complexity optimizing AUC ----------
+    def prune_ccp_auc(self, min_improvement=1e-4):
+        """
+        Iteratively attempt to prune internal nodes if AUC on validation set doesn't decrease.
+        """
+        if getattr(self, "_val_X", None) is None:
+            raise RuntimeError("No validation set stored. Fit with validation_fraction>0 to enable pruning.")
+        improved = True
+        while improved:
+            improved = self._prune_recursive_try(self.root, self._val_X, self._val_y, min_improvement)
+
+    def _prune_recursive_try(self, node, X_val, y_val, min_improvement):
+        """
+        returns True if any pruning happened in this subtree
+        """
+        if node.is_leaf:
+            return False
+        pruned_left = self._prune_recursive_try(node.left, X_val, y_val, min_improvement)
+        pruned_right = self._prune_recursive_try(node.right, X_val, y_val, min_improvement)
+        # Evaluate pruning at current node:
+        # Save state
+        left_save = node.left
+        right_save = node.right
+        split_save = node.split
+        is_leaf_save = node.is_leaf
+        model_save = node.model
+
+        # baseline AUC
+        base_preds = np.array([self.root.predict_proba_instance(x) for x in X_val])
+        if base_preds.shape[1] == 2:
+            base_scores = base_preds[:,1]
+            base_auc = roc_auc_score(y_val, base_scores)
+        else:
+            # multiclass: macro average
+            from sklearn.preprocessing import label_binarize
+            classes = np.arange(base_preds.shape[1])
+            y_bin = label_binarize(y_val, classes=classes)
+            base_auc = roc_auc_score(y_bin, base_preds, average="macro")
+
+        # try prune: make node a leaf, train leaf model on its training samples
+        # gather training samples for this node if available
+        if node.samples_idx is not None and hasattr(self, "root"):
+            # train new leaf model on node's samples (we need original training X and y -> not stored per sample)
+            # As pragmatic approach: reuse node.model that was trained on node data, but remove children:
+            node.left = None
+            node.right = None
+            node.split = None
+            node.is_leaf = True
+            # get new preds
+            new_preds = np.array([self.root.predict_proba_instance(x) for x in X_val])
+            if new_preds.shape[1] == 2:
+                new_scores = new_preds[:,1]
+                new_auc = roc_auc_score(y_val, new_scores)
+            else:
+                classes = np.arange(new_preds.shape[1])
+                y_bin = label_binarize(y_val, classes=classes)
+                new_auc = roc_auc_score(y_bin, new_preds, average="macro")
+
+            # decide keep prune or revert
+            if new_auc + min_improvement >= base_auc:
+                # keep prune (already modified)
+                return True or pruned_left or pruned_right
+            else:
+                # revert
+                node.left = left_save
+                node.right = right_save
+                node.split = split_save
+                node.is_leaf = is_leaf_save
+                node.model = model_save
+                return pruned_left or pruned_right
+        else:
+            return pruned_left or pruned_right
+
+# -------------------------
+# Example usage: load CSV, train, prune, predict
+# -------------------------
+if __name__ == "__main__":
+    import argparse
+    from sklearn.metrics import classification_report, roc_auc_score
+
+    parser = argparse.ArgumentParser(description="Train FT4cip from CSV")
+    parser.add_argument("--csv", required=True, help="csv file with data (last column should be class)")
+    parser.add_argument("--test-size", type=float, default=0.2, help="test size fraction")
+    parser.add_argument("--random-state", type=int, default=42)
+    parser.add_argument("--prune", action="store_true", help="perform CCP pruning after training")
+    args = parser.parse_args()
+
+    df = pd.read_csv(args.csv)
+    # assume last column is target
+    X_df = df.iloc[:, :-1]
+    y = df.iloc[:, -1].values
+
+    X_train_df, X_test_df, y_train, y_test = train_test_split(X_df, y, test_size=args.test_size, stratify=y, random_state=args.random_state)
+
+    clf = FT4cip(max_depth=6, min_samples_split=20, convert_nominal=True, use_boosting=False, sfs_max_features=4, random_state=args.random_state)
+    clf.fit(X_train_df, y_train, validation_fraction=0.15)
+    print("Initial training done.")
+    if args.prune:
+        print("Pruning using CCP optimizing AUC...")
+        clf.prune_ccp_auc()
+        print("Pruning done.")
+
+    preds = clf.predict(X_test_df)
+    print("Classification report:")
+    print(classification_report(y_test, preds))
+    # AUC if binary
+    probs = clf.predict_proba(X_test_df)
+    if probs.shape[1] == 2:
+        print("AUC:", roc_auc_score(y_test, probs[:,1]))
+    else:
+        from sklearn.preprocessing import label_binarize
+        y_bin = label_binarize(y_test, classes=np.arange(probs.shape[1]))
+        print("Multiclass AUC (macro):", roc_auc_score(y_bin, probs, average="macro"))
