@@ -1,11 +1,11 @@
 [
     {
-        "condition": "sex == B AND education != C AND occupation != A AND yu_e_tm_categery != A AND prior_account > 14.65",
+        "condition": "expenditure > 0.00",
         "prediction": "positive",
-        "support": 907,
-        "positive_count": 817,
-        "positive_support": 0.010547379292538085,
-        "negative_count": 89,
-        "negative_support": 0.0011489801187709785
+        "support": 798,
+        "positive_count": 798,
+        "positive_support": 0.4877750611246944,
+        "negative_count": 0,
+        "negative_support": 0.0
     }
 ]

@@ -23,7 +23,7 @@ if __name__ == "__main__":
     contenido = sorted(contenido)
     print(contenido)
     balancear = True
-    flag = True
+    flag = False
     for cont in contenido:
         print("         " + cont)
         name = cont
@@ -168,8 +168,8 @@ if __name__ == "__main__":
                 "MatrixConfusion": str(cm.tolist())
             }
             rowsft.append(row)
-            #break
-        #break
+            break
+        break
     # Exportar a CSV
     cadena = 'SinBalancear'
     if balancear:

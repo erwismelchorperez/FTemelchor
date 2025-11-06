@@ -1,0 +1,15 @@
+Leaf 1 (depth=3, samples=160):
+(0.004 * remainder__expenditure) <= -0.7522 AND (0.639 * cat__selfemp_no) + (-0.639 * cat__selfemp_yes) + (-0.367 * remainder__reports) + (0.058 * remainder__active) <= 0.4574 AND (-0.108 * remainder__age) + (-0.101 * remainder__active) <= 1.3697
+
+Leaf 2 (depth=3, samples=1):
+(0.004 * remainder__expenditure) <= -0.7522 AND (0.639 * cat__selfemp_no) + (-0.639 * cat__selfemp_yes) + (-0.367 * remainder__reports) + (0.058 * remainder__active) <= 0.4574 AND (-0.108 * remainder__age) + (-0.101 * remainder__active) > 1.3697
+
+Leaf 3 (depth=3, samples=50):
+(0.004 * remainder__expenditure) <= -0.7522 AND (0.639 * cat__selfemp_no) + (-0.639 * cat__selfemp_yes) + (-0.367 * remainder__reports) + (0.058 * remainder__active) > 0.4574 AND (0.053 * remainder__age) + (-0.048 * remainder__active) <= 1.5077
+
+Leaf 4 (depth=3, samples=6):
+(0.004 * remainder__expenditure) <= -0.7522 AND (0.639 * cat__selfemp_no) + (-0.639 * cat__selfemp_yes) + (-0.367 * remainder__reports) + (0.058 * remainder__active) > 0.4574 AND (0.053 * remainder__age) + (-0.048 * remainder__active) > 1.5077
+
+Leaf 5 (depth=1, samples=679):
+(0.004 * remainder__expenditure) > -0.7522
+

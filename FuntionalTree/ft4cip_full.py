@@ -654,9 +654,17 @@ class FT4CIP:
                     break
 
                 feature_indices = mfl.get("feature_indices", [])
-                lda_coefs = mfl.get("lda", [])  # pesos de variables
+                lda_coefs = mfl.get("lda", None)  # aquí puede ser un objeto LDA o array
                 threshold = mfl.get("threshold", None)
-                if threshold is None or len(feature_indices) != len(lda_coefs):
+                if threshold is None:
+                    break
+
+                # Si lda_coefs es un objeto con coeficientes (como LinearDiscriminantAnalysis)
+                if lda_coefs is not None and hasattr(lda_coefs, "coef_"):
+                    lda_coefs = lda_coefs.coef_[0]
+
+                # Verificamos que las longitudes coincidan
+                if len(feature_indices) != len(lda_coefs):
                     break
 
                 terms = []
@@ -681,19 +689,19 @@ class FT4CIP:
         rule = " AND ".join(path_conditions)
         return rule
 
+
     def mine_patterns_and_save(self, filename="patterns_all_leaves.txt"):
         leaves = self.root.get_all_leaf_nodes_()
-        
+
         with open(filename, "w") as f:
             for i, leaf in enumerate(leaves):
-                #print(leaf)
                 pattern = self.extract_patterns_from_leaf(leaf)
-                #f.write(f"Leaf {i+1} (depth={leaf.depth}, samples={leaf.n_samples}):\n")
-                #f.write(pattern + "\n\n")
+                if pattern.strip():  # Evitar hojas vacías
+                    f.write(f"Leaf {i+1} (depth={leaf.depth}, samples={leaf.n_samples}):\n")
+                    f.write(pattern + "\n\n")
 
         print(f"Patterns from {len(leaves)} leaves saved in '{filename}'.")
-    
-    
+
     # -------------------------
     # Cost Complexity Pruning optimized for AUC
     # -------------------------
@@ -848,7 +856,7 @@ def run_example_with_iris():
     print("Done example.")
 
 def run_credit_risk():
-    dataset = pd.read_csv("./../../datasets/australian.csv")
+    dataset = pd.read_csv("./../../datasets/german.csv")
 
     X = dataset.drop(columns="target")
     y = dataset["target"]
@@ -858,10 +866,10 @@ def run_credit_risk():
     )
     # Ejemplo con tu FT4CIP (ajusta los parámetros si lo necesitas)
     clf = FT4CIP(
-        max_depth=4,
-        min_samples_split=5,
+        max_depth=3,
+        min_samples_split=6,
         convert_nominal=True,
-        logitboost_params={"max_iter": 30, "learning_rate": 0.1},
+        logitboost_params={"max_iter": 30, "learning_rate": 0.01},
         sfs_max_features=3,
         random_state=42,
         verbose=True
